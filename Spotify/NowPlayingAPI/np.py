@@ -13,8 +13,6 @@ else:
     print ("Usage: %s username" % (sys.argv[0],))
     sys.exit()
 
-#util.prompt_for_user_token(username,scope,client_id='3c363d706916445fb78d76e633e53db6',client_secret='a8adc2db5b834352962b25475715c685',redirect_uri='http://localhost:8080')
-
 
 while True:
     token = util.prompt_for_user_token(username, scope)
