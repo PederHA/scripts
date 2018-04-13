@@ -31,8 +31,8 @@ def find_active_window():
 def get_song_info(window_id):
     """
     Gets Spotify window title using `win32gui.GetWindowText()` with the
-    previously obtained `window_id`. If title is not Spotify, parse
-    title and write it to text document. 
+    previously obtained `window_id`. If spotify_window_title is 
+    not 'Spotify' or '', parse title and write it to text document. 
     
     After song info is parsed and
     written, sleeps for 10 seconds then resumes the loop as long as
@@ -46,29 +46,33 @@ def get_song_info(window_id):
 
     while spotify_window_active:
         # Get Spotify window title.
-        spotify_text = win32gui.GetWindowText(window_id)
-        artist = ""
-        song = ""
+        spotify_window_title = win32gui.GetWindowText(window_id)
         
-        if spotify_text == "Spotify":
+        if spotify_window_title == "Spotify":
             # This means a song isn't currently playing, but the application is running.
+            track_info = " "
             time.sleep(5)
 
-        elif spotify_text == '':
-            # If the spotify window that was found with find_active_window() is not found, terminate loop.
+        elif spotify_window_title == '':
+            # If the spotify window that was found with find_active_window() is not found,
+            # spotify_window_title will be an empty string. Terminate loop and look for new window.
+
+            track_info = " "
+
             spotify_window_active = False
             find_active_window()
 
         else:
             # Else split the window title at the "-" symbol to get artist and song strings.
-            artist, song = spotify_text.split("-", 1)
+            artist, song = spotify_window_title.split("-", 1)
 
             # Concatenate
-            songinfo = (artist + " - " + song + "       ")
+            track_info = (artist + " - " + song + "       ")
 
-            with open('np.txt', 'w', encoding="utf-8") as f:
-                f.write(songinfo)
             time.sleep(10)
+        
+        with open('np.txt', 'w', encoding="utf-8") as f:
+                f.write(track_info)
 
 
 if __name__ == "__main__":
