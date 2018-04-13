@@ -35,7 +35,7 @@ def get_song_info(window_id):
 
     spotify_window_active = True
 
-    while spotify_window_active == True:
+    while spotify_window_active:
         # Get spotify window info.
         spotify_text = win32gui.GetWindowText(window_id)
         artist = ""
