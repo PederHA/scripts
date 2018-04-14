@@ -69,6 +69,7 @@ def get_song_info(window_id):
 
         else:
             # Else split the window title at the "-" symbol to get artist and song strings.
+            # This isn't explicitly necessary, however it gives more flexibility with regards to formatting.
             artist, song = spotify_window_title.split("-", 1)
 
             # Concatenate
