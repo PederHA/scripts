@@ -5,8 +5,12 @@ import json
 import time
 
 """
-Based on Example from spotipy. 
-Not very good.
+Based on Example from spotipy. Fetches information
+about currently playing track from Spotify API and
+writes to text file.
+
+Limited by Spotify API rate limit, thus the win32gui
+script is a better fit for this task.
 """
 
 scope = 'user-read-playback-state'
