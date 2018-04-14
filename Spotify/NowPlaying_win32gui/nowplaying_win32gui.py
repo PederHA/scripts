@@ -2,10 +2,16 @@ import time
 import win32gui
 
 """
+Python script that retrieves currently playing artist and track
+from an active Spotify instance on a computer running Windows. 
+The data is written to a text file, which can be used for 
+displaying "Now Playing" info when streaming.
+
 This script used to be based on Spotilib, however its functionality
 was broken in a Q2 2018 Spotify update. I have rewritten the script 
-to restore its functionality.However, memory footprint has quadrupled 
-as a result. From 1MB to 4MB.
+to restore its functionality. However, memory footprint has increased 
+as a result. From 1MB to 4MB. Sleep values can be tweaked, but based
+on personal testing, polling every 2/5 seconds and writing every 10 
 
 Works as of Spotify 1.0.77.338.g758ebd78
 """
@@ -32,11 +38,10 @@ def get_song_info(window_id):
     """
     Gets Spotify window title using `win32gui.GetWindowText()` with the
     previously obtained `window_id`. If spotify_window_title is 
-    not 'Spotify' or '', parse title and write it to text document. 
+    not 'Spotify' or '', parse window title and write it to text document. 
     
-    After song info is parsed and
-    written, sleeps for 10 seconds then resumes the loop as long as
-    a Spotify window is active.
+    After song info is parsed and written to file, the process sleeps 
+    for 10 seconds then resumes the loop as long as a Spotify window is active.
 
     Should the window be closed, the loop is exited and `find_active_window()`
     is executed again.
@@ -58,8 +63,8 @@ def get_song_info(window_id):
             # spotify_window_title will be an empty string. Terminate loop and look for new window.
 
             track_info = " "
-
             spotify_window_active = False
+            
             find_active_window()
 
         else:
