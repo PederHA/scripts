@@ -10,8 +10,8 @@ displaying "Now Playing" info when streaming.
 This script used to be based on Spotilib, however its functionality
 was broken in a Q2 2018 Spotify update. I have rewritten the script 
 to restore its functionality. However, memory footprint has increased 
-as a result. From 1MB to 4MB. Sleep values can be tweaked, but based
-on personal testing, polling every 2/5 seconds and writing every 10 
+as a result. From 1MB to 4MB. Sleep values can be tweaked according 
+to personal preferences.
 
 Works as of Spotify 1.0.77.338.g758ebd78
 """
