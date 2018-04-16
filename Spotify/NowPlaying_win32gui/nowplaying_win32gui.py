@@ -23,13 +23,13 @@ def find_active_window():
     """
 
     # Looks for a window with className "Chrome_WidgetWin_0" and title "Spotify"
-    # Returns 0 if window isn't found.
     window_id = win32gui.FindWindow("Chrome_WidgetWin_0", "Spotify")
 
     # If win32gui.FindWindow returned 0, repeat until window is found.
     while window_id == 0:
         window_id = win32gui.FindWindow("Chrome_WidgetWin_0", "Spotify")
         time.sleep(2)
+
    # Run get_song_info with the window_id that was obtained
     get_song_info(window_id)
 
@@ -59,12 +59,11 @@ def get_song_info(window_id):
             time.sleep(5)
 
         elif spotify_window_title == '':
-            # If the spotify window that was found with find_active_window() is not found,
-            # spotify_window_title will be an empty string. Terminate loop and look for new window.
-
+            # If window is closed, win32gui.GetWindowText() returns empty string.
             track_info = " "
-            spotify_window_active = False
             
+            # Terminate loop and look for new window.
+            spotify_window_active = False
             find_active_window()
 
         else:
