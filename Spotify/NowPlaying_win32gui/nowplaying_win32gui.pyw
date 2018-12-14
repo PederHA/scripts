@@ -23,11 +23,15 @@ def find_active_window() -> int:
     """
     Attempts to find an active Spotify window. Loops until window is found.
     """
-    func = functools.partial(win32gui.FindWindow, "Chrome_WidgetWin_0", "Spotify")
+
     # Loops until win32gui.FindWindow returns anything but 0
-    while func() == 0:
-        time.sleep(2)
-    return func()
+    while True:
+        _id = win32gui.FindWindow("Chrome_WidgetWin_0", "Spotify")
+        if _id == 0:
+            time.sleep(2)
+        else:
+            return _id
+    
 
 
 def get_song_info(window_id: int, sleep_duration: int) -> None:
