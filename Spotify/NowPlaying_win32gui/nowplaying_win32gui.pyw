@@ -1,5 +1,6 @@
 import time
 import win32gui
+import functools
 
 """
 Python script that retrieves currently playing artist and track
@@ -20,29 +21,22 @@ Works as of Spotify 1.0.77.338.g758ebd78
 
 def find_active_window() -> int:
     """
-    Tries to find an active Spotify window. Loops until window is found.
+    Attempts to find an active Spotify window. Loops until window is found.
     """
-
-    # Looks for a window with className "Chrome_WidgetWin_0" and title "Spotify"
-    window_id = win32gui.FindWindow("Chrome_WidgetWin_0", "Spotify")
-    # If win32gui.FindWindow returned 0, repeat until window is found.
-    while window_id == 0:
-        window_id = win32gui.FindWindow("Chrome_WidgetWin_0", "Spotify")
+    func = functools.partial(win32gui.FindWindow, "Chrome_WidgetWin_0", "Spotify")
+    # Loops until win32gui.FindWindow returns anything but 0
+    while func() == 0:
         time.sleep(2)
-    return window_id
+    return func()
 
 
 def get_song_info(window_id: int, sleep_duration: int) -> None:
     """
-    Gets Spotify window title using `win32gui.GetWindowText()` with the
-    previously obtained `window_id`. If spotify_window_title is 
-    not 'Spotify' or '', parse window title and write it to text document. 
-    
-    After song info is parsed and written to file, the process sleeps 
-    for 10 seconds then resumes the loop as long as a Spotify window is active.
+    Finds title of Spotify window with ID `window_id` and writes it to a text file.
+    If no song is playing, an empty string is written to file.
 
-    Should the window be closed, the loop is exited and `find_active_window()`
-    is executed again.
+    This process loops until a Spotify window with the given `window_id`
+    cannot be found any longer.
     """
 
     last_track = None
@@ -54,7 +48,7 @@ def get_song_info(window_id: int, sleep_duration: int) -> None:
         
         if spotify_window_title == "Spotify":
             # This means a song isn't currently playing, but the application is running.
-            track_info = " "
+            track_info = ""
         else:
             track_info = f"{spotify_window_title}         "
 
