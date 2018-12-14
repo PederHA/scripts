@@ -60,7 +60,7 @@ def get_song_info(window_id: int, sleep_duration: int) -> None:
 
         if track_info != last_track:
             with open('np.txt', 'w+', encoding="utf-8") as f:
-                    f.write(track_info)
+                f.write(track_info)
         last_track = track_info
         time.sleep(sleep_duration)
 
