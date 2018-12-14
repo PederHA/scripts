@@ -1,7 +1,3 @@
-import time
-import win32gui
-import functools
-
 """
 Python script that retrieves currently playing artist and track
 from an active Spotify instance on a computer running Windows. 
@@ -17,6 +13,9 @@ to personal preferences.
 Works as of Spotify 1.0.77.338.g758ebd78
 """
 
+import time
+import win32gui
+import functools
 
 
 def find_active_window() -> int:
@@ -33,14 +32,12 @@ def find_active_window() -> int:
             return _id
     
 
-
 def get_song_info(window_id: int, sleep_duration: int=2, spaces: int=10) -> None:
     """
     Finds title of Spotify window with ID `window_id` and writes it to a text file.
     If no song is playing, an empty string is written to file.
 
-    This process loops until a Spotify window with the given `window_id`
-    cannot be found any longer.
+    Loops until a Spotify window with the given `window_id` cannot be found any longer.
     """
 
     last_track = None
@@ -63,10 +60,12 @@ def get_song_info(window_id: int, sleep_duration: int=2, spaces: int=10) -> None
         last_track = track_info
         time.sleep(sleep_duration)
 
+
 def main():
     while True:
         window_id = find_active_window()
         get_song_info(window_id)
+
 
 if __name__ == "__main__":
     main()
