@@ -34,7 +34,7 @@ def find_active_window() -> int:
     
 
 
-def get_song_info(window_id: int, sleep_duration: int) -> None:
+def get_song_info(window_id: int, sleep_duration: int=2, spaces: int=10) -> None:
     """
     Finds title of Spotify window with ID `window_id` and writes it to a text file.
     If no song is playing, an empty string is written to file.
@@ -54,7 +54,8 @@ def get_song_info(window_id: int, sleep_duration: int) -> None:
             # This means a song isn't currently playing, but the application is running.
             track_info = ""
         else:
-            track_info = f"{spotify_window_title}         "
+            spaces = " "*10
+            track_info = f"{spotify_window_title}{spaces}"
 
         if track_info != last_track:
             with open('np.txt', 'w+', encoding="utf-8") as f:
@@ -65,7 +66,7 @@ def get_song_info(window_id: int, sleep_duration: int) -> None:
 def main():
     while True:
         window_id = find_active_window()
-        get_song_info(window_id, 2)
+        get_song_info(window_id)
 
 if __name__ == "__main__":
     main()
